@@ -15,8 +15,25 @@ def fallthrough(args):
     return proc.wait()
 
 
+def wget_wrapper(args):
+    print('emulating wget for ', ' '.join(args))
+    status = 0
+    raise(Exception('Not implemented'))
+    return status
+
+
 def generic_wrapper():
     args = sys.argv
+    if len(args) <= 1:
+        raise(Exception())
     if args[0].endswith('git-annex-wrapper'):
         del(args[0])
-    return fallthrough(args)
+    if args[0].endswith('wget'):
+        try:
+            status = wget_wrapper(args)
+        except Exception:
+            print('Emulation failed, doing real call')
+            status = fallthrough(args)
+    else:
+        status = fallthrough(args)
+    return status
