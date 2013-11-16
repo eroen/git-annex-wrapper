@@ -39,6 +39,9 @@ def wget_wrapper(args):
     print('outfile: ', outfile)
 
     os.chdir(repo)
+    # portage silently deletes symlinks
+    proc = subprocess.Popen(['git', 'checkout', outfile])
+    proc.communicate()
     proc = subprocess.Popen(['git', 'annex', 'whereis', outfile],
                             stdout=subprocess.PIPE)
     (stdoutdata, _) = proc.communicate()
