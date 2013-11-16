@@ -17,6 +17,13 @@ def fallthrough(args):
     return proc.wait()
 
 
+def ga_addurl(src, outfile, repo='.'):
+    os.chdir(repo)
+    proc = subprocess.Popen(['git', 'annex', 'addurl',
+                             '--file={f}'.format(f=outfile), src])
+    proc.communicate()
+
+
 def wget_wrapper(args):
     print('emulating wget for ', ' '.join(args))
     if args[0].endswith('wget'):
@@ -40,8 +47,9 @@ def wget_wrapper(args):
 
     os.chdir(repo)
     # portage silently deletes symlinks
-    proc = subprocess.Popen(['git', 'checkout', outfile])
+    proc = subprocess.Popen(['git', 'checkout', '--', outfile])
     proc.communicate()
+    ga_addurl(src, outfile)
     proc = subprocess.Popen(['git', 'annex', 'whereis', outfile],
                             stdout=subprocess.PIPE)
     (stdoutdata, _) = proc.communicate()
