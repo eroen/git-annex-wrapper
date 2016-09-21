@@ -55,7 +55,7 @@ def wget_wrapper(args):
     (stdoutdata, _) = proc.communicate()
     print('\n'.join(stdoutdata.decode().split()))
 
-    if not 'ok' in stdoutdata.decode().split():
+    if 'ok' not in stdoutdata.decode().split():
         raise(Exception())
 
     proc = subprocess.Popen(['git', 'annex', 'get', outfile],
