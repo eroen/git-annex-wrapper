@@ -1,5 +1,5 @@
 '''
-By eroen, 2013
+By eroen, 2013 - 2016
 
 Permission to use, copy, modify, and/or distribute this software for any
 purpose with or without fee is hereby granted, provided that the above
@@ -61,7 +61,7 @@ def wget_wrapper(args):
     proc = subprocess.Popen(['git', 'annex', 'get', outfile],
                             stdout=subprocess.PIPE)
     (stdoutdata, _) = proc.communicate()
-    print('\n'.join(stdoutdata.decode().split()))
+    print('\n'.join(stdoutdata.decode().splitlines()))
     status = proc.returncode
 
     return status
